@@ -1,0 +1,16 @@
+{
+  "name": "feliz_jueves",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Lukacho",
+  "license": "ISC",
+  "dependencies": {
+    "discord-user-bots": "^1.6.0",
+    "fs": "0.0.1-security"
+  }
+}
