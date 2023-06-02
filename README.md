@@ -3,4 +3,4 @@ this is just a stupid lil js discord userbot that checks the current day-of-the-
 Add it to your autostart or create a cron job or whatever and you're good to go.
 
 ## Settings
-The Settings should be pretty self explanatory. Guides on getting your user token can be found online.
+The Settings should be pretty self explanatory. Guides on getting your user token can be found online. Just extract it and put it into a "token.txt" in the script directory.
