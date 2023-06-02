@@ -1,7 +1,7 @@
 function seekMidnight(days) {
     //get the properly formatted date of the next midnight
     const now = new Date();
-    if (days === 0) {
+    if (days === 0 || days === undefined || days === null) {
         return null;
     }
     const dayForward = new Date(now.getFullYear(), now.getMonth(), now.getDate() + days);
@@ -45,12 +45,6 @@ if(userToken === undefined){
     process.exit();
 }
 
-const status = settings.status;
-const statusEmoji = settings.statusEmoji;
-const day = settings.day;
-const daysForward = settings.daysForward;
-
-
 const dayNameMap = {
     0: "sunday",
     1: "monday",
@@ -65,9 +59,37 @@ const nowDay = nowDate.getDay();
 
 console.log(`it's ${dayNameMap[nowDay]}`);
 
-if(nowDay === day){
-    setStatus(userToken, status, statusEmoji, daysForward, () => {process.exit()});
-}
-else{
-    console.log(`no ${status} for you😥`);
+statusVariants = settings.statusVariants;
+
+statusVariants.forEach((statusVariant) => {
+    const day = statusVariant.day;
+    if(nowDay !== day){
+        console.log(`no ${dayNameMap[day]} status for you😥`);
+    }
+});
+
+try{
+statusVariants.forEach((statusVariant) => {
+    const statusOptions = statusVariant.statusOptions;
+    const day = statusVariant.day;
+    const daysForward = statusVariant.daysForward;
+
+    const statusOption = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+    const status = statusOption.status;
+    const statusEmoji = statusOption.statusEmoji;
+
+    if(statusOptions === undefined || statusEmoji === undefined || day === undefined || daysForward === undefined){
+        console.error(`statusVariant for day ${dayNameMap[day]} or one of its subfields is missing a field`);
+        process.exit();
+    }
+
+    if(nowDay === day){
+        setStatus(userToken, status, statusEmoji, daysForward, () => {process.exit();});
+        throw "StopIteration"
+    }
+})}
+catch (e) {
+    if (e !== "StopIteration") {
+        throw e;
+    }
 }
