@@ -38,7 +38,13 @@ function setStatus(userToken, status, statusEmoji, days, callback) {
 
 const fs = require("fs");
 const settings = JSON.parse(fs.readFileSync("settings.json", "utf8"));
-const userToken = settings.userToken;
+const userToken = fs.readFileSync("token.txt", "utf8");
+
+if(userToken === undefined){
+    console.error("token.txt is empty or missing");
+    process.exit();
+}
+
 const status = settings.status;
 const statusEmoji = settings.statusEmoji;
 const day = settings.day;
