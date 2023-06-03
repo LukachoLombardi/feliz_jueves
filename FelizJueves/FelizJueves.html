@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--requires nw.js libraries-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Feliz Jueves</title>
+</head>
+<body class="noselect">
+<header>
+</header>
+
+<div class="header">
+    <h1>Feliz Jueves Settings</h1>
+</div>
+
+<div class="elements">
+    <button>save settings</button>
+    <br>
+    <label for="userToken">
+        <input class="wider rounded" id="userToken" type="text">
+        userToken
+    </label>
+    <h2>daySettings</h2>
+    <div class="VariantsSettings" id="VariantSettings">
+        <div class="SettingsContainer" id="SettingsContainer">
+            <!--add settings here-->
+        </div>
+        <button>+ variant</button>
+    </div>
+
+    <script>
+        win = nw.Window.get(undefined);
+        win.resizeBy(20,200)
+        win.setResizable(false);
+
+        fs = require('fs');
+
+        // language=HTML
+        let VariantSettings = `
+        <div class="VariantSettings boxed rounded">
+            <details>
+                <summary class="VariantSummary">variant</summary>
+                <label><input class="Day narrower" type="number" min="0" max="6"> day</label>
+                <br>
+                <label><input class="DaysForward narrower" type="number" min="0"> daysForward</label>
+                <br>
+                <ul class="StatusOptions">
+                    <!--add in StatusOptions here-->
+                </ul>
+                <button style="margin-left: 5px">+ status</button>
+            </details>
+        </div>
+        `
+
+
+        //language=HTML
+        let StatusOption = `
+        <li><div class="StatusOption boxed rounded">
+            <label><input class="Status" type="text"> status</label>
+            <br>
+            <label><input class="StatusEmoji" type="text"> statusEmoji</label>
+        </div></li>
+        `
+
+        loadSettings();
+        function loadSettings() {
+            console.log("loading settings");
+
+            let settings = JSON.parse(fs.readFileSync("FelizCheck/settings.json", "utf8"));
+            window.document.getElementById("userToken").value = fs.readFileSync("FelizCheck/token.txt", "utf8");
+
+            let statusVariants = settings.statusVariants;
+
+            statusVariants.forEach((statusVariant) => {
+                const statusOptions = statusVariant.statusOptions;
+                const day = statusVariant.day;
+                const daysForward = statusVariant.daysForward;
+
+                let variantSettingsFrag = document.createRange().createContextualFragment(VariantSettings);
+
+                variantSettingsFrag.querySelector("div.VariantSettings details .Day").setAttribute("value", day);
+                variantSettingsFrag.querySelector("div.VariantSettings details .DaysForward").setAttribute("value", daysForward);
+                variantSettingsFrag.querySelector("div.VariantSettings details summary.VariantSummary").textContent =
+                    statusOptions[Math.floor(Math.random() * statusOptions.length)].statusEmoji;
+
+                statusOptions.forEach((statusOption) => {
+                    let statusOptionFrag = document.createRange().createContextualFragment(StatusOption);
+
+                    statusOptionFrag.querySelector("div.StatusOption .Status").value = statusOption.status;
+                    statusOptionFrag.querySelector("div.StatusOption .StatusEmoji").value = statusOption.statusEmoji;
+
+                    variantSettingsFrag.querySelector("div.VariantSettings .StatusOptions").appendChild(statusOptionFrag);
+                });
+
+                document.getElementById("SettingsContainer").appendChild(
+                    variantSettingsFrag
+                );
+            });
+            console.log("loaded settings")
+        }
+    </script>
+</div>
+
+</body>
+</html>

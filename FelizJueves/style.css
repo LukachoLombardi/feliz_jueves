@@ -79,8 +79,17 @@ button:hover{
     scale: 110%;
 }
 
-details{
-    transition: all 0.2s ease;
+details {
+    padding: 10px;
+}
+
+details summary {
+    cursor: pointer;
+    transition: margin 150ms ease-out;
+}
+
+details[open] summary {
+    margin-bottom: 10px;
 }
 
 .noselect {
