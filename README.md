@@ -1,3 +1,5 @@
+![Feliz Jueves!](FelizJueves/icon.png)
+
 # Feliz Jueves
 
 ---
