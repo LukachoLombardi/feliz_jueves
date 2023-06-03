@@ -31,7 +31,7 @@ body {
 }
 
 .header{
-    font-size: xxx-large;
+    font-size: xx-large;
     text-align: left;
     padding: 20px;
     margin: 0 auto;
@@ -43,14 +43,31 @@ body {
     line-height: 50px;
 }
 
+.rounded{
+    border-radius: 5px;
+}
+
+.wider{
+    width: 50%;
+}
+
+.narrower{
+    width: 5%;
+}
+
+.boxed{
+    border: 2px solid white;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
 button{
     transition: all 0.2s ease;
-    border-radius: 10px;
     font-size: xx-large;
     background: none;
     color: white;
-    border: 4px solid white;
-
+    border: 2px solid white;
+    border-radius: 10px;
     margin-right: 15px;
 }
 button:active{
@@ -60,6 +77,10 @@ button:active{
 }
 button:hover{
     scale: 110%;
+}
+
+details{
+    transition: all 0.2s ease;
 }
 
 .noselect {
