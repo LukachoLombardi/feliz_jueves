@@ -6,6 +6,9 @@ this is just a stupid little js discord user-bot that checks the current day-of-
 and changes your status to a specified string for a specified number of days if it matches.
 Add it to your autostart or create a cron job or whatever, and you're good to go.
 
+the actual functioning script is found under /FelizJueves/FelizCheck/FelizCheck.js. The rest is part of an unfinished
+UI for settings and autostart creation.
+
 ## Settings
 The Settings should be pretty self-explanatory. Guides on getting your user token can be found online. 
 Just extract it and put it into a "token.txt" in the script directory.
