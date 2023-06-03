@@ -1,4 +1,13 @@
 {
   "name": "felizjueves",
-  "main": "FelizJueves.html"
+  "main": "FelizJueves.html",
+  "dependencies": {
+    "bootstrap": "5.3.0",
+    "discord-user-bots": "^1.6.0",
+    "fs": "0.0.1-security",
+    "nwjs-types": "1.0.0",
+  },
+  "window": {
+    "icon": "icon.png"
+  }
 }
