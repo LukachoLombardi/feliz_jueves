@@ -118,6 +118,9 @@ function isEmoji(value){
     if(value.match(ranges.join('|')) && value.length === 2) {
         return true;
     } else {
+        //check doesn't work correctly so for now you can just enter whatever
+        //TODO: fix this
+        return true;
         return false;
     }
 }
@@ -251,4 +254,23 @@ function saveSettings() {
 
     console.debug("saved: \n" + settingsString);
     console.log("saved settings");
+}
+
+function addFileToAutostart(file){
+    console.log("adding file to autostart");
+
+    //check for platform
+    if(process.platform === "win32"){
+        let autostartPath = process.env.APPDATA + "\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\";
+        fs.copyFileSync(file, autostartPath);
+    } else if(process.platform === "linux"){
+        const execSync = require('child_process').execSync;
+        const output = execSync('crontab -e @reboot ' + file, { encoding: 'utf-8' });
+    }
+    else{
+        console.log("platform not supported");
+        //TODO: add actual file path
+        alert("platform not supported. Please add the file to autostart manually");
+        return;
+    }
 }
