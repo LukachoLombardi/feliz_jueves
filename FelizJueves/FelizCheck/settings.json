@@ -1,26 +1,42 @@
 {
     "statusVariants": [
-
-    {"statusOptions": [
-        {"status": "it's wednesday, sparkle on!",
-        "statusEmoji": "✨"},
-        {"status": "it's wednesday my dudes",
-        "statusEmoji": "🐸"}],
-    "day": 3,
-    "daysForward": 1},
-
-    {"statusOptions": [
-        {"status": "feliz jueves!",
-        "statusEmoji": "🎉"},
-        {"status": "it's thurday, sparkle off!",
-        "statusEmoji": "🤨"}],
-    "day": 4,
-    "daysForward": 1},
-
-    {"statusOptions": [
-        {"status": "happy floppa friday!",
-        "statusEmoji": "🐱"}],
-    "day": 5,
-    "daysForward": 1}
-]
+        {
+            "statusOptions": [
+                {
+                    "status": "it's wednesday, sparkle on!",
+                    "statusEmoji": "✨"
+                },
+                {
+                    "status": "it's wednesday my dudes",
+                    "statusEmoji": "🐸"
+                }
+            ],
+            "day": "3",
+            "daysForward": "1"
+        },
+        {
+            "statusOptions": [
+                {
+                    "status": "feliz jueves!",
+                    "statusEmoji": "🎉"
+                },
+                {
+                    "status": "it's thurday, sparkle off!",
+                    "statusEmoji": "🤨"
+                }
+            ],
+            "day": "4",
+            "daysForward": "1"
+        },
+        {
+            "statusOptions": [
+                {
+                    "status": "happy floppa friday!",
+                    "statusEmoji": "🐱"
+                }
+            ],
+            "day": "5",
+            "daysForward": "1"
+        }
+    ]
 }
