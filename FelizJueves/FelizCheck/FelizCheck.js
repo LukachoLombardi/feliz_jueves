@@ -36,65 +36,98 @@ function setStatus(userToken, status, statusEmoji, days, callback) {
     };
 }
 
-const fs = require("fs");
-const settings = JSON.parse(fs.readFileSync("settings.json", "utf8"));
-const userToken = fs.readFileSync("token.txt", "utf8");
 
-if (userToken === undefined) {
-    console.error("token.txt is empty or missing");
-    process.exit();
-}
+function checkFeliz() {
+    const fs = require("fs");
+    const settings = JSON.parse(fs.readFileSync("settings.json", "utf8"));
+    const userToken = fs.readFileSync("token.txt", "utf8");
 
-const dayNameMap = {
-    0: "sunday",
-    1: "monday",
-    2: "tuesday",
-    3: "wednesday",
-    4: "thursday",
-    5: "friday",
-    6: "saturday"
-};
-
-const nowDate = new Date();
-const nowDay = nowDate.getDay();
-
-console.log(`it's ${dayNameMap[nowDay]}`);
-
-statusVariants = settings.statusVariants;
-
-/*
-statusVariants.forEach((statusVariant) => {
-    const day = statusVariant.day;
-    if(nowDay !== day){
-        console.log(`no ${dayNameMap[day]} status for you😥`);
+    if (userToken === undefined) {
+        console.error("token.txt is empty or missing");
+        process.exit();
     }
-});
- */
 
-try {
+    const dayNameMap = {
+        0: "sunday",
+        1: "monday",
+        2: "tuesday",
+        3: "wednesday",
+        4: "thursday",
+        5: "friday",
+        6: "saturday"
+    };
+
+    const nowDate = new Date();
+    const nowDay = nowDate.getDay();
+
+    console.log(`it's ${dayNameMap[nowDay]}`);
+
+    statusVariants = settings.statusVariants;
+
+    /*
     statusVariants.forEach((statusVariant) => {
-        const statusOptions = statusVariant.statusOptions;
         const day = statusVariant.day;
-        const daysForward = statusVariant.daysForward;
-
-        const statusOption = statusOptions[Math.floor(Math.random() * statusOptions.length)];
-        const status = statusOption.status;
-        const statusEmoji = statusOption.statusEmoji;
-
-        if (statusOptions === undefined || statusEmoji === undefined || day === undefined || daysForward === undefined) {
-            console.error(`statusVariant for day ${dayNameMap[day]} or one of its subfields is missing a field`);
-            process.exit();
+        if(nowDay !== day){
+            console.log(`no ${dayNameMap[day]} status for you😥`);
         }
+    });
+     */
 
-        if (nowDay === day) {
-            setStatus(userToken, status, statusEmoji, daysForward, () => {
-                process.exit();
-            });
-            throw "StopIteration"
+    try {
+        statusVariants.forEach((statusVariant) => {
+            const statusOptions = statusVariant.statusOptions;
+            const day = statusVariant.day;
+            const daysForward = statusVariant.daysForward;
+
+            const statusOption = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+            const status = statusOption.status;
+            const statusEmoji = statusOption.statusEmoji;
+
+            if (statusOptions === undefined || statusEmoji === undefined || day === undefined || daysForward === undefined) {
+                console.error(`statusVariant for day ${dayNameMap[day]} or one of its subfields is missing a field`);
+                throw "StopIteration";
+            }
+
+            if (nowDay == day) {
+                setStatus(userToken, status, statusEmoji, daysForward, () => {
+                    //pass
+                });
+                console.log("found status");
+                throw "StopIteration";
+            }
+        })
+        console.log("no status for you😥");
+    } catch (e) {
+        if (e !== "StopIteration") {
+            throw e;
         }
-    })
-} catch (e) {
-    if (e !== "StopIteration") {
-        throw e;
     }
 }
+
+function getMsUntilMidnight() {
+    const now = new Date();
+    const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    return midnight - now;
+}
+
+function scheduleRecFeliz() {
+    const msUntilMidnight = getMsUntilMidnight();
+    console.log("time until midnight: " + msUntilMidnight);
+    setTimeout(recursiveFeliz, msUntilMidnight + 15000);
+}
+
+let now = new Date();
+let midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+function recursiveFeliz() {
+    console.log("waiting for midnight");
+    while (new Date() < midnight) {
+        //wait
+    }
+    checkFeliz();
+    now = new Date();
+    midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    scheduleRecFeliz();
+}
+
+checkFeliz();
+scheduleRecFeliz();
