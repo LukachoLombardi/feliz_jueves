@@ -79,6 +79,14 @@ button:hover{
     scale: 110%;
 }
 
+.fade {
+    opacity: 1;
+}
+.fade.hidden {
+    opacity: 0;
+    transition: opacity 3s ease-in-out;
+}
+
 details {
     padding: 10px;
 }
@@ -100,4 +108,14 @@ details[open] summary {
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+
+.positive {
+    color: greenyellow;
+}
+.warning {
+    color: orange;
+}
+.error {
+    color: red;
 }
