@@ -12,6 +12,8 @@
   "dependencies": {
     "bootstrap": "5.3.0",
     "discord-user-bots": "^1.6.0",
+    "forever": "^4.0.3",
+    "forever-monitor": "^1.5.2",
     "fs": "0.0.1-security"
   }
 }

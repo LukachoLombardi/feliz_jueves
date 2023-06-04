@@ -1,9 +1,4 @@
-const forever = require('forever-monitor');
+const forever = require('forever');
 
-forever.start('FelizCheck.js', {
-    max: 3,
-    silent: false,
-    uid: 'FelizJueves',
-  }); 
-
-process.exit();
+const execSync = require('child_process').execSync;
+const output = execSync("forever start FelizCheck.js", { encoding: 'utf-8' });

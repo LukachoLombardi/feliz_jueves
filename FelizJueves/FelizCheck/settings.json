@@ -37,6 +37,16 @@
             ],
             "day": "5",
             "daysForward": "1"
+        },
+        {
+            "statusOptions": [
+                {
+                    "status": "test",
+                    "statusEmoji": ""
+                }
+            ],
+            "day": "1",
+            "daysForward": "1"
         }
     ]
 }

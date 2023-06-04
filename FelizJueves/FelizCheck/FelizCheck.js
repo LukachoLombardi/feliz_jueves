@@ -76,8 +76,8 @@ function checkFeliz() {
     try {
         statusVariants.forEach((statusVariant) => {
             const statusOptions = statusVariant.statusOptions;
-            const day = statusVariant.day;
-            const daysForward = statusVariant.daysForward;
+            const day = Number(statusVariant.day);
+            const daysForward = Number(statusVariant.daysForward);
 
             const statusOption = statusOptions[Math.floor(Math.random() * statusOptions.length)];
             const status = statusOption.status;
@@ -88,7 +88,7 @@ function checkFeliz() {
                 throw "StopIteration";
             }
 
-            if (nowDay == day) {
+            if (nowDay === day) {
                 setStatus(userToken, status, statusEmoji, daysForward, () => {
                     //pass
                 });
