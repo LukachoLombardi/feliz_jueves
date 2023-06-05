@@ -36,7 +36,7 @@ daysForward simply tells the script how long to keep the status active.
     - one for FelizCheck (the actual program)
 3. rename the nw executables and folders accordingly
 4. move the contents of the app.nw folder of FelizCheck into FelizCheck's root folder/where nw loads loose files from (check the [nw.js github](https://github.com/nwjs/nw.js/wiki/How-to-package-and-distribute-your-apps) for platform specific infos)
-5. put the FelizCheck app folder into FelizJueve's corresponding load folder (most likely the app.nw folder. As said, check the wiki for more infos!)
+5. If not already happened, delete the source of the FelizCheck folder from the FelizJueves build. Put the FelizCheck app folder into FelizJueve's corresponding load folder (most likely the app.nw folder. As said, check the wiki for more infos!).
 6. You're done! Run your renamed FelizJueves nw executable or repeat for other platforms.
 
 I'll probably create an automated process for this in the future, but right now I just want to get the first release out there.
