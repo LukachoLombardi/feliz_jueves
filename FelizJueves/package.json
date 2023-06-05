@@ -1,13 +1,43 @@
 {
-  "name": "felizjueves",
-  "main": "FelizJueves.html",
-  "dependencies": {
-    "bootstrap": "5.3.0",
-    "discord-user-bots": "^1.6.0",
-    "fs": "0.0.1-security",
-    "nwjs-types": "1.0.0"
-  },
-  "window": {
-    "icon": "icon.png"
-  }
+    "app_name": "FelizJueves",
+    "author": "Lukacho",
+    "dependencies": {
+        "bootstrap": "5.3.0",
+        "discord-user-bots": "^1.6.0",
+        "fs": "0.0.1-security",
+        "nwjs-types": "1.0.0"
+    },
+    "license": "ISC",
+    "main": "FelizJueves.html",
+    "name": "feliz_jueves",
+    "nodejs": true,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "webexe_settings": {
+        "blacklist": "/FelizCheck",
+        "custom_script": "",
+        "download_dir": "",
+        "export_dir": "C:/Users/lulll/WebstormProjects/feliz_jueves/build/Jueves",
+        "force_download": false,
+        "nw_compression_level": 2,
+        "nw_version": "0.76.1",
+        "output_pattern": "",
+        "sdk_build": false,
+        "uncompressed_folder": false,
+        "whitelist": "",
+        "windows-x32": false,
+        "windows-x64": true
+    },
+    "webkit": {},
+    "window": {
+        "frame": true,
+        "icon": "icon.png",
+        "id": "FelizJueves",
+        "resizable": true,
+        "show": true,
+        "show_in_taskbar": true,
+        "title": "FelizJueves",
+        "visible": true
+    }
 }

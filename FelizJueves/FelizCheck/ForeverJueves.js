@@ -1,4 +1,11 @@
-const forever = require('forever');
+//DEPRECATED
 
-const execSync = require('child_process').execSync;
-const output = execSync("forever start FelizCheck.js", { encoding: 'utf-8' });
+const pm2 = require('pm2');
+
+pm2.start('FelizCheck.js', (err, apps) => {
+    if (err) {
+        console.error(err);
+        process.exit(1);
+    }
+    console.log('FelizCheck.js started successfully');
+});

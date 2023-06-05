@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!--requires nw.js libraries-->
+<!--requires nw.js library-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,9 @@
 </div>
 
 <div class="elements">
-    <button onclick="saveSettings();">save settings</button><div id="settingsSavedText" class="fade hidden positive" style="display: inline; margin-left: 5px;"> [saveText here]</div>
+    <button onclick="saveSettings();">save settings</button><div id="settingsSavedText" class="fade hidden positive" style="display: inline; margin-left: 5px;"> [saveText here]</div> <br>
+    <button onclick="addToAutostart(); playFadeAnim('AutostartCreatedText'); ">add autostart</button><div id="AutostartCreatedText" class="fade hidden positive" style="display: inline; margin-left: 3px;"> 
+    creating autostart</div>
     <br>
     <label for="userToken">
         <input class="wider rounded" id="userToken" type="text">

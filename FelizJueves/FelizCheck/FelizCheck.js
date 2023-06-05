@@ -120,13 +120,37 @@ let now = new Date();
 let midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
 function recursiveFeliz() {
     console.log("waiting for midnight");
-    while (new Date() < midnight) {
-        //wait
+    if (new Date() <= midnight) {
+        setTimeout(recursiveFeliz, 15000);
+        return;
     }
     checkFeliz();
     now = new Date();
     midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
     scheduleRecFeliz();
+}
+
+try{
+    const tray = new nw.Tray({
+        title: 'FelizJueves',
+        tooltip: 'FelizJueves is running🎉',
+        icon: 'icon.png'
+      });
+      
+    const menu = new nw.Menu();
+    
+    menu.append(new nw.MenuItem({
+        label: 'Quit',
+        click: function() {
+            setStatus(userToken, "", "", 0, () => {
+                nw.App.quit();}
+                );
+        }
+      }));
+      
+    tray.menu = menu;
+} catch(e){
+    console.log("not running in nw.js, so no tray icon")
 }
 
 checkFeliz();

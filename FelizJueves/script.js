@@ -39,8 +39,19 @@ loadSettings();
 function loadSettings() {
     console.log("loading settings");
 
-    let settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
-    window.document.getElementById("userToken").value = fs.readFileSync(tokenPath, "utf8");
+    if(fs.existsSync(settingsPath) === true){
+        var settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
+    }
+    else {
+        fs.writeFileSync(settingsPath, "", "utf8");
+    }
+
+    if(fs.existsSync(tokenPath) === true){
+        window.document.getElementById("userToken").value = fs.readFileSync(tokenPath, "utf8");
+    }
+    else {
+        fs.writeFileSync(tokenPath, "", "utf8");
+    }
 
     let statusVariants = settings.statusVariants;
 
@@ -186,7 +197,7 @@ function ensureArgsComplete()
     {
         settingsSavedText.classList.add("error");
         settingsSavedText.innerText = "error"
-        playSaveAnim();
+        playFadeAnim();
         alert("save error: at least one required field is missing");
         return false;
     }
@@ -199,10 +210,10 @@ function ensureArgsComplete()
 
 }
 
-function playSaveAnim(){
-    document.getElementById("settingsSavedText").classList.remove("hidden");
+function playFadeAnim(id){
+    document.getElementById(id).classList.remove("hidden");
     setTimeout(() => {
-        document.getElementById("settingsSavedText").classList.add("hidden");
+        document.getElementById(id).classList.add("hidden");
     }, 10);
 }
 
@@ -250,22 +261,43 @@ function saveSettings() {
     fs.writeFileSync(settingsPath, settingsString);
     fs.writeFileSync(tokenPath, window.document.getElementById("userToken").value);
 
-    playSaveAnim();
+    playFadeAnim("settingsSavedText");
 
     console.debug("saved: \n" + settingsString);
     console.log("saved settings");
 }
 
-function addFileToAutostart(file){
+
+function addToAutostart(){
     console.log("adding file to autostart");
 
     //check for platform
     if(process.platform === "win32"){
-        let autostartPath = process.env.APPDATA + "\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\";
-        fs.copyFileSync(file, autostartPath);
+        //let autostartPath = process.env.APPDATA + "\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\";
+        //fs.copyFileSync(file, autostartPath);
+        fs.writeFileSync(process.env.APPDATA + "\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\FelizCheck.bat", 
+        `
+            @echo off
+
+            setlocal
+
+            cd /d ${process.cwd()}\\FelizCheck
+
+            set js_file=%cd%\\FelizCheck.js
+            set exe_file=%cd%\\FelizCheck.exe
+
+            if exist %exe_file% (
+            %exe_file%
+            ) else (
+            node %js_file%
+            )
+        `,
+        "utf8");
+
     } else if(process.platform === "linux"){
+        let filePath = "/FelizCheck/FelizCheck";
         const execSync = require('child_process').execSync;
-        const output = execSync('crontab -e @reboot ' + file, { encoding: 'utf-8' });
+        const output = execSync('crontab -e @reboot ' + filePath, { encoding: 'utf-8' });
     }
     else{
         console.log("platform not supported");
@@ -273,4 +305,5 @@ function addFileToAutostart(file){
         alert("platform not supported. Please add the file to autostart manually");
         return;
     }
+    console.log("added file to autostart");
 }

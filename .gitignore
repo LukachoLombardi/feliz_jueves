@@ -2,4 +2,7 @@ FelizJueves/FelizCheck/token.txt
 node_modules/
 FelizJueves/node_modules/
 FelizJueves/FelizCheck/node-modules/
-nwjs-sdk-v0.76.1-win-x64/
+/tools/
+output/
+build/
+FelizCheck.bat
