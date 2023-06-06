@@ -41,7 +41,7 @@ function setStatus(userToken, status, statusEmoji, days, callback) {
 }
 
 let userToken = "token"
-if(fs.existsSync(tokenPath) === true) {
+if (fs.existsSync(tokenPath) === true) {
     userToken = fs.readFileSync(tokenPath, "utf8");
 }
 
@@ -119,6 +119,7 @@ function scheduleRecFeliz() {
 
 let now = new Date();
 let midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+
 function recursiveFeliz() {
     console.log("waiting for midnight");
     if (new Date() <= midnight) {

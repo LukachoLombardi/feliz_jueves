@@ -6,10 +6,10 @@ onOpenCallback();
 nw.Window.get(undefined).close();
 
 // configuring the tray
-try{
+try {
     let trayTooltip;
     let userToken;
-    if(fs.existsSync("./FelizCheck/token.txt") === true){
+    if (fs.existsSync("./FelizCheck/token.txt") === true) {
         userToken = fs.readFileSync("./FelizCheck/token.txt", "utf8");
     } else {
         userToken = "";
@@ -36,27 +36,28 @@ try{
 
     menu.append(new nw.MenuItem({
         label: 'Quit',
-        click: function() {
+        click: function () {
             nw.App.quit();
         }
     }));
 
     tray.menu = menu;
-} catch(e){
+} catch (e) {
     console.log("not running in nw.js or other unknown error. No tray icon")
 }
 
 runChecker();
 
 nw.App.on("open", onOpenCallback)
-function onOpenCallback(){
+
+function onOpenCallback() {
     console.log("starting webUI");
     nw.Window.open("./FelizJueves.html");
-    nw.Window.get(undefined).on("close", ()=>{
+    nw.Window.get(undefined).on("close", () => {
         nw.Window.get(undefined).hide();
     });
 }
 
-async function runChecker(){
+async function runChecker() {
     //require("./FelizCheck/FelizCheck.js");
 }

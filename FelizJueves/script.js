@@ -9,46 +9,49 @@ const tokenPath = "FelizCheck/token.txt";
 
 // language=HTML
 let VariantSettings = `
-<div class="VariantSettings boxed rounded">
-    <details>
-        <summary class="VariantSummary">new variant</summary>
-        <label><input class="Day narrower" type="number" min="0" max="6" onfocusout="ensureUniqueDay(event);"> day</label>
-        <br>
-        <label><input class="DaysForward narrower" type="number" min="0" value="1"> daysForward</label>
-        <br>
-        <ul class="StatusOptions">
-            <!--add in StatusOptions here-->
-        </ul>
-        <button style="margin-left: 5px" onclick="addStatusOption(event);">+ status</button>
-        <button style="margin-left: 5px" onclick="removeLatestStatusOption(event);">- status</button>
-    </details>
-</div>
+    <div class="VariantSettings boxed rounded">
+        <details>
+            <summary class="VariantSummary">new variant</summary>
+            <label><input class="Day narrower" type="number" min="0" max="6" onfocusout="ensureUniqueDay(event);">
+                day</label>
+            <br>
+            <label><input class="DaysForward narrower" type="number" min="0" value="1"> daysForward</label>
+            <br>
+            <ul class="StatusOptions">
+                <!--add in StatusOptions here-->
+            </ul>
+            <button style="margin-left: 5px" onclick="addStatusOption(event);">+ status</button>
+            <button style="margin-left: 5px" onclick="removeLatestStatusOption(event);">- status</button>
+        </details>
+    </div>
 `
 
 //language=HTML
 let StatusOption = `
-<li><div class="StatusOption boxed rounded">
-    <label><input class="Status" type="text"> status</label>
-    <br>
-    <label><input class="StatusEmoji" type="text" onchange="ensureEmoji(event); createSummary(event);"> statusEmoji</label>
-</div></li>
+    <li>
+        <div class="StatusOption boxed rounded">
+            <label><input class="Status" type="text"> status</label>
+            <br>
+            <label><input class="StatusEmoji" type="text" onchange="ensureEmoji(event); createSummary(event);">
+                statusEmoji</label>
+        </div>
+    </li>
 `
 
 loadSettings();
+
 function loadSettings() {
     console.log("loading settings");
 
     if (fs.existsSync(settingsPath) === true) {
         var settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
-    }
-    else {
+    } else {
         fs.writeFileSync(settingsPath, "", "utf8");
     }
 
     if (fs.existsSync(tokenPath) === true) {
         window.document.getElementById("userToken").value = fs.readFileSync(tokenPath, "utf8");
-    }
-    else {
+    } else {
         fs.writeFileSync(tokenPath, "", "utf8");
     }
 
@@ -81,12 +84,14 @@ function loadSettings() {
     });
     console.log("loaded settings")
 }
+
 function addVariant() {
     let variantSettingsFrag = document.createRange().createContextualFragment(VariantSettings);
     document.getElementById("SettingsContainer").appendChild(
         variantSettingsFrag
     );
 }
+
 function addStatusOption(event) {
     let statusOptionFrag = document.createRange().createContextualFragment(StatusOption);
     let variantToAppendTo = event.target.parentElement.querySelector("ul.StatusOptions");
@@ -96,6 +101,7 @@ function addStatusOption(event) {
 function removeLatestVariant(event) {
     document.getElementById("SettingsContainer").lastElementChild.remove();
 }
+
 function removeLatestStatusOption(event) {
     let variantToModify = event.target.parentElement.querySelector("ul.StatusOptions");
     variantToModify.lastElementChild.remove();
@@ -149,8 +155,7 @@ function ensureUniqueDay(event) {
                 console.debug("day isn't unique");
                 caller.value = "";
                 return;
-            }
-            else {
+            } else {
                 firstOccured = true;
             }
         }
@@ -194,8 +199,7 @@ function ensureArgsComplete() {
         playFadeAnim();
         alert("save error: at least one required field is missing");
         return false;
-    }
-    else {
+    } else {
         settingsSavedText.classList.add("positive");
         settingsSavedText.innerText = "saved"
         return true;
@@ -260,6 +264,7 @@ function saveSettings() {
 }
 
 const {exec, execSync} = require('child_process');
+const {basename} = require("path");
 
 function addToAutostart() {
     console.log("adding file to autostart");
@@ -268,23 +273,17 @@ function addToAutostart() {
     if (process.platform === "win32") {
         //let autostartPath = process.env.APPDATA + "\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\";
         //fs.copyFileSync(file, autostartPath);
-        let path = process.env.APPDATA + "\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\FelizCheck.bat";
-        fs.writeFileSync(path,
+        let batPath = process.env.APPDATA + "\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\FelizCheck.bat";
+        fs.writeFileSync(batPath,
             `
             @echo off
 
             setlocal
 
             cd /d "${process.cwd()}"
-
-            set js_file="%cd%\\FelizCheck\\FelizCheck.js"
+            cd ..
             set exe_file="%cd%\\FelizJueves.exe"
-
-            if exist %exe_file% (
             %exe_file%
-            ) else (
-            node %js_file%
-            )
         `,
             "utf8");
         /*
@@ -299,9 +298,8 @@ function addToAutostart() {
        */
     } else if (process.platform === "linux") {
         let filePath = "/FelizCheck/FelizJueves";
-        const output = execSync('crontab -e @reboot ' + filePath, { encoding: 'utf-8' });
-    }
-    else {
+        const output = execSync('crontab -e @reboot ' + filePath, {encoding: 'utf-8'});
+    } else {
         console.log("platform not supported");
         alert("platform not supported. Please add the file to autostart manually");
         return;
