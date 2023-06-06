@@ -275,10 +275,10 @@ function addToAutostart() {
 
             setlocal
 
-            cd /d ${process.cwd()}
+            cd /d "${process.cwd()}"
 
-            set js_file=%cd%\\FelizCheck\\FelizCheck.js
-            set exe_file=%cd%\\FelizJueves.exe
+            set js_file="%cd%\\FelizCheck\\FelizCheck.js"
+            set exe_file="%cd%\\FelizJueves.exe"
 
             if exist %exe_file% (
             %exe_file%
