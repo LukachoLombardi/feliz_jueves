@@ -36,16 +36,17 @@ function setStatus(userToken, status, statusEmoji, days, callback) {
     };
 }
 
+const fs = require("fs");
+const userToken = fs.readFileSync("token.txt", "utf8");
+
+if (userToken === undefined || userToken === "") {
+    console.error("token.txt is empty or missing");
+    nw.App.quit();
+    process.exit();
+}
 
 function checkFeliz() {
-    const fs = require("fs");
     const settings = JSON.parse(fs.readFileSync("settings.json", "utf8"));
-    const userToken = fs.readFileSync("token.txt", "utf8");
-
-    if (userToken === undefined) {
-        console.error("token.txt is empty or missing");
-        process.exit();
-    }
 
     const dayNameMap = {
         0: "sunday",
@@ -132,8 +133,8 @@ function recursiveFeliz() {
 
 try{
     const tray = new nw.Tray({
-        title: 'FelizJueves',
-        tooltip: 'FelizJueves is running🎉',
+        title: 'Feliz Jueves',
+        tooltip: 'Feliz Jueves is running🎉',
         icon: 'icon.png'
       });
       
