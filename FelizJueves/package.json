@@ -7,8 +7,7 @@
         "fs": "0.0.1-security",
         "nwjs-types": "1.0.0"
     },
-    "license": "ISC",
-    "main": "FelizJueves.html",
+    "main": "main.js",
     "name": "feliz_jueves",
     "nodejs": true,
     "scripts": {

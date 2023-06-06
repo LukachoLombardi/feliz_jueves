@@ -1,3 +1,11 @@
+const fs = require("fs");
+const {basename} = require("path");
+const discord = require("discord-user-bots");
+
+let tokenPath = __dirname + "/token.txt";
+let settingsPath = __dirname + "/settings.json";
+
+
 function seekMidnight(days) {
     //get the properly formatted date of the next midnight
     const now = new Date();
@@ -8,12 +16,8 @@ function seekMidnight(days) {
     return dayForward.toISOString();
 }
 
-
 function setStatus(userToken, status, statusEmoji, days, callback) {
-    const discord = require("discord-user-bots");
-
     const discordClient = new discord.Client(userToken);
-
 
     discordClient.on.ready = function () {
         console.log("user connected");
@@ -36,17 +40,9 @@ function setStatus(userToken, status, statusEmoji, days, callback) {
     };
 }
 
-const fs = require("fs");
-const userToken = fs.readFileSync("token.txt", "utf8");
-
-if (userToken === undefined || userToken === "") {
-    console.error("token.txt is empty or missing");
-    nw.App.quit();
-    process.exit();
-}
-
+const userToken = fs.readFileSync(tokenPath, "utf8");
 function checkFeliz() {
-    const settings = JSON.parse(fs.readFileSync("settings.json", "utf8"));
+    const settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
 
     const dayNameMap = {
         0: "sunday",
@@ -63,7 +59,7 @@ function checkFeliz() {
 
     console.log(`it's ${dayNameMap[nowDay]}`);
 
-    statusVariants = settings.statusVariants;
+    let statusVariants = settings.statusVariants;
 
     /*
     statusVariants.forEach((statusVariant) => {
@@ -129,29 +125,6 @@ function recursiveFeliz() {
     now = new Date();
     midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
     scheduleRecFeliz();
-}
-
-try{
-    const tray = new nw.Tray({
-        title: 'Feliz Jueves',
-        tooltip: 'Feliz Jueves is running🎉',
-        icon: 'icon.png'
-      });
-      
-    const menu = new nw.Menu();
-    
-    menu.append(new nw.MenuItem({
-        label: 'Quit',
-        click: function() {
-            setStatus(userToken, "", "", 0, () => {
-                nw.App.quit();}
-                );
-        }
-      }));
-      
-    tray.menu = menu;
-} catch(e){
-    console.log("not running in nw.js, so no tray icon")
 }
 
 checkFeliz();

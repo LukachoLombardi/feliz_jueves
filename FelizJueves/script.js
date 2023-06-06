@@ -25,7 +25,6 @@ let VariantSettings = `
 </div>
 `
 
-
 //language=HTML
 let StatusOption = `
 <li><div class="StatusOption boxed rounded">
@@ -260,6 +259,7 @@ function saveSettings() {
     console.log("saved settings");
 }
 
+const {exec, execSync} = require('child_process');
 
 function addToAutostart() {
     console.log("adding file to autostart");
@@ -275,10 +275,10 @@ function addToAutostart() {
 
             setlocal
 
-            cd /d ${process.cwd()}\\FelizCheck
+            cd /d ${process.cwd()}
 
-            set js_file=%cd%\\FelizCheck.js
-            set exe_file=%cd%\\FelizCheck.exe
+            set js_file=%cd%\\FelizCheck\\FelizCheck.js
+            set exe_file=%cd%\\FelizJueves.exe
 
             if exist %exe_file% (
             %exe_file%
@@ -287,7 +287,6 @@ function addToAutostart() {
             )
         `,
             "utf8");
-        const {exec} = require('child_process');
 
         exec(`"${path}"`, (err, stdout, stderr) => {
             if (err) {
@@ -298,8 +297,7 @@ function addToAutostart() {
         }
         );
     } else if (process.platform === "linux") {
-        let filePath = "/FelizCheck/FelizCheck";
-        const execSync = require('child_process').execSync;
+        let filePath = "/FelizCheck/FelizJueves";
         const output = execSync('crontab -e @reboot ' + filePath, { encoding: 'utf-8' });
     }
     else {
