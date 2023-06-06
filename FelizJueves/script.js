@@ -283,7 +283,7 @@ function addToAutostart() {
             cd /d "${process.cwd()}"
             cd ..
             set exe_file="%cd%\\FelizJueves.exe"
-            %exe_file%
+            start "" %exe_file%
         `,
             "utf8");
         /*
