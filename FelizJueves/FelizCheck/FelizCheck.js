@@ -40,7 +40,11 @@ function setStatus(userToken, status, statusEmoji, days, callback) {
     };
 }
 
-const userToken = fs.readFileSync(tokenPath, "utf8");
+let userToken = "token"
+if(fs.existsSync(tokenPath) === true) {
+    userToken = fs.readFileSync(tokenPath, "utf8");
+}
+
 function checkFeliz() {
     const settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
 

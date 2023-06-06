@@ -8,7 +8,12 @@ nw.Window.get(undefined).close();
 // configuring the tray
 try{
     let trayTooltip;
-    const userToken = fs.readFileSync("./FelizCheck/token.txt", "utf8");
+    let userToken;
+    if(fs.existsSync("./FelizCheck/token.txt") === true){
+        userToken = fs.readFileSync("./FelizCheck/token.txt", "utf8");
+    } else {
+        userToken = "";
+    }
     if (userToken === undefined || userToken === "") {
         console.error("token.txt is empty or missing");
         trayTooltip = "token.txt is empty or missing. Add it and restart.";

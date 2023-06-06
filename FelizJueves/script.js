@@ -303,7 +303,6 @@ function addToAutostart() {
     }
     else {
         console.log("platform not supported");
-        //TODO: add actual file path
         alert("platform not supported. Please add the file to autostart manually");
         return;
     }
