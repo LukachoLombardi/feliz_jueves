@@ -287,7 +287,7 @@ function addToAutostart() {
             )
         `,
             "utf8");
-
+        /*
         exec(`"${path}"`, (err, stdout, stderr) => {
             if (err) {
                 console.error(err);
@@ -296,6 +296,7 @@ function addToAutostart() {
             console.log("FelizCheck says: " + stdout);
         }
         );
+       */
     } else if (process.platform === "linux") {
         let filePath = "/FelizCheck/FelizJueves";
         const output = execSync('crontab -e @reboot ' + filePath, { encoding: 'utf-8' });
