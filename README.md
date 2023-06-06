@@ -12,22 +12,12 @@ Discord's stance on self-bots being used like this is a bit unclear. You'll most
 take any responsibility whatsoever for any lost or banned accounts. Use at your own risk.***
 
 ## Settings
-The Settings should be pretty self-explanatory. Guides on getting your user token can be found online. 
-Just extract it and put it into a "token.txt" in the script directory.
-
-You can define new status rules in the array like this. Note that the day count starts with sunday at index 0. 
-daysForward simply tells the script how long to keep the status active.
-
-
-```
-{"statusOptions": [
-        {"status": "feliz jueves!",
-        "statusEmoji": "🎉"},
-        {"status": "it's thurday, sparkle off!",
-        "statusEmoji": "🤨"}],
-    "day": 4,
-    "daysForward": 1}
-```
+You can open "FelizJueves.exe" to access the WebUI and settings. First of all, add your discord userToken. A guide on how to do so
+can be found [here](https://www.androidauthority.com/get-discord-token-3149920/). In the settings you can add new days.
+Assign them an Index from 0-6 (Sunday-Saturday), specify the amount of days to keep the status (keep it at 1 if unsure) and add one or multiple
+status options with or without a special status emoji. These will be randomly selected on their day. Click save to save.
+Use the autostart button to add the status setter to autostart and start it right now. An icon should appear in your tray
+to indicate that it's running.
 
 ## How to build (very hacky rn)
 1. get the newest web2exe binary for your platform (deprecated but whatever).
