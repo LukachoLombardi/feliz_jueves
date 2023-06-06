@@ -1,6 +1,6 @@
 {
     "webexe_settings": {
-        "blacklist": "/FelizCheck",
+        "blacklist": "",
         "custom_script": "",
         "download_dir": "",
         "export_dir": "C:/Users/lulll/WebstormProjects/feliz_jueves/build/Jueves",

@@ -1,5 +1,5 @@
 win = nw.Window.get(undefined);
-win.resizeBy(20,200)
+win.resizeBy(20, 200)
 win.setResizable(false);
 
 fs = require('fs');
@@ -39,14 +39,14 @@ loadSettings();
 function loadSettings() {
     console.log("loading settings");
 
-    if(fs.existsSync(settingsPath) === true){
+    if (fs.existsSync(settingsPath) === true) {
         var settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
     }
     else {
         fs.writeFileSync(settingsPath, "", "utf8");
     }
 
-    if(fs.existsSync(tokenPath) === true){
+    if (fs.existsSync(tokenPath) === true) {
         window.document.getElementById("userToken").value = fs.readFileSync(tokenPath, "utf8");
     }
     else {
@@ -106,7 +106,7 @@ function createSummary(event) {
     console.debug("creating summary");
     let caller = event.target;
     let summary = event.target.closest("details").querySelector("summary.VariantSummary");
-    if(summary.textContent === "new variant" && caller.value != "") {
+    if (summary.textContent === "new variant" && caller.value != "") {
         summary.textContent = caller.value;
     }
 }
@@ -114,19 +114,19 @@ function createSummary(event) {
 function ensureEmoji(event) {
     console.debug("checking for emoji")
     let caller = event.target;
-    if(!isEmoji(caller.value)) {
+    if (!isEmoji(caller.value)) {
         caller.value = "";
     }
 }
 
-function isEmoji(value){
+function isEmoji(value) {
     var ranges = [
         '\ud83c[\udf00-\udfff]', // U+1F300 to U+1F3FF
         '\ud83d[\udc00-\ude4f]', // U+1F400 to U+1F64F
         '\ud83d[\ude80-\udeff]'  // U+1F680 to U+1F6FF
     ];
     console.debug("valueLength:" + value.length)
-    if(value.match(ranges.join('|')) && value.length === 2) {
+    if (value.match(ranges.join('|')) && value.length === 2) {
         return true;
     } else {
         //check doesn't work correctly so for now you can just enter whatever
@@ -136,34 +136,31 @@ function isEmoji(value){
     }
 }
 
-function ensureUniqueDay(event){
+function ensureUniqueDay(event) {
     console.debug("checking day uniqueness")
     let caller = event.target;
     let day = caller.value;
     let allDays = document.querySelectorAll("input.Day");
     let allDaysArray = Array.from(allDays);
-    
+
     let firstOccured = false;
     allDaysArray.forEach((dayInArray) => {
-            if(dayInArray.value === day){
-                if(firstOccured)
-                {
-                    console.debug("day isn't unique");
-                    caller.value = "";
-                    return;
-                }
-                else
-                {
-                    firstOccured = true;
-                }
+        if (dayInArray.value === day) {
+            if (firstOccured) {
+                console.debug("day isn't unique");
+                caller.value = "";
+                return;
             }
+            else {
+                firstOccured = true;
+            }
+        }
     })
 }
 
 
 //also plays some animations and such because
-function ensureArgsComplete()
-{
+function ensureArgsComplete() {
     let settingsSavedText = document.getElementById("settingsSavedText");
     settingsSavedText.classList.remove("error", "warning", "positive");
 
@@ -180,29 +177,26 @@ function ensureArgsComplete()
     let statesArray = Array.from(states);
 
     toBeCheckedArray = daysArray.concat(daysForwardArray, statusOptionsArray, statesArray);
-    
+
     toBeCheckedArray = toBeCheckedArray.map((element) => {
         return element.value;
     });
 
     console.debug("toBeCheckedArray: " + toBeCheckedArray);
 
-    if(document.getElementById("userToken").value === "")
-    {
+    if (document.getElementById("userToken").value === "") {
         alert("save warning: a user token should be provided");
         settingsSavedText.classList.add("warning");
     }
 
-    if(toBeCheckedArray.includes(undefined) || toBeCheckedArray.includes(""))
-    {
+    if (toBeCheckedArray.includes(undefined) || toBeCheckedArray.includes("")) {
         settingsSavedText.classList.add("error");
         settingsSavedText.innerText = "error"
         playFadeAnim();
         alert("save error: at least one required field is missing");
         return false;
     }
-    else
-    {
+    else {
         settingsSavedText.classList.add("positive");
         settingsSavedText.innerText = "saved"
         return true;
@@ -210,7 +204,7 @@ function ensureArgsComplete()
 
 }
 
-function playFadeAnim(id){
+function playFadeAnim(id) {
     document.getElementById(id).classList.remove("hidden");
     setTimeout(() => {
         document.getElementById(id).classList.add("hidden");
@@ -220,8 +214,7 @@ function playFadeAnim(id){
 function saveSettings() {
     console.log("saving settings");
 
-    if(!ensureArgsComplete())
-    {
+    if (!ensureArgsComplete()) {
         return;
     }
 
@@ -255,7 +248,7 @@ function saveSettings() {
             "daysForward": daysForward
         });
     });
-    
+
     let settingsString = JSON.stringify(settings, null, 4);
 
     fs.writeFileSync(settingsPath, settingsString);
@@ -268,15 +261,16 @@ function saveSettings() {
 }
 
 
-function addToAutostart(){
+function addToAutostart() {
     console.log("adding file to autostart");
 
     //check for platform
-    if(process.platform === "win32"){
+    if (process.platform === "win32") {
         //let autostartPath = process.env.APPDATA + "\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\";
         //fs.copyFileSync(file, autostartPath);
-        fs.writeFileSync(process.env.APPDATA + "\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\FelizCheck.bat", 
-        `
+        let path = process.env.APPDATA + "\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\FelizCheck.bat";
+        fs.writeFileSync(path,
+            `
             @echo off
 
             setlocal
@@ -292,14 +286,23 @@ function addToAutostart(){
             node %js_file%
             )
         `,
-        "utf8");
+            "utf8");
+        const {exec} = require('child_process');
 
-    } else if(process.platform === "linux"){
+        exec(`"${path}"`, (err, stdout, stderr) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            console.log("FelizCheck says: " + stdout);
+        }
+        );
+    } else if (process.platform === "linux") {
         let filePath = "/FelizCheck/FelizCheck";
         const execSync = require('child_process').execSync;
         const output = execSync('crontab -e @reboot ' + filePath, { encoding: 'utf-8' });
     }
-    else{
+    else {
         console.log("platform not supported");
         //TODO: add actual file path
         alert("platform not supported. Please add the file to autostart manually");
