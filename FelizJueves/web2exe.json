@@ -3,7 +3,7 @@
         "blacklist": "",
         "custom_script": "",
         "download_dir": "",
-        "export_dir": "C:/Users/lulll/WebstormProjects/feliz_jueves/build/Jueves",
+        "export_dir": "output",
         "force_download": false,
         "nw_compression_level": 0,
         "nw_version": "0.76.1",

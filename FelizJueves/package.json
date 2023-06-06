@@ -15,16 +15,16 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "webexe_settings": {
-        "blacklist": "/FelizCheck",
+        "blacklist": "",
         "custom_script": "",
         "download_dir": "",
-        "export_dir": "C:/Users/lulll/WebstormProjects/feliz_jueves/build/Jueves",
+        "export_dir": "output",
         "force_download": false,
-        "nw_compression_level": 2,
+        "nw_compression_level": 0,
         "nw_version": "0.76.1",
         "output_pattern": "",
         "sdk_build": false,
-        "uncompressed_folder": false,
+        "uncompressed_folder": true,
         "whitelist": "",
         "windows-x32": false,
         "windows-x64": true
