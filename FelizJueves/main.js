@@ -59,5 +59,5 @@ function onOpenCallback() {
 }
 
 async function runChecker() {
-    //require("./FelizCheck/FelizCheck.js");
+    require("./FelizCheck/FelizCheck.js");
 }
