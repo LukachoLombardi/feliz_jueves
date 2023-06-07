@@ -4,6 +4,7 @@ const discord = require("discord-user-bots");
 
 let tokenPath = __dirname + "/token.txt";
 let settingsPath = __dirname + "/settings.json";
+let userToken = "token"
 
 
 function seekMidnight(days) {
@@ -38,11 +39,6 @@ function setStatus(userToken, status, statusEmoji, days, callback) {
             callback()
         })
     };
-}
-
-let userToken = "token"
-if (fs.existsSync(tokenPath) === true) {
-    userToken = fs.readFileSync(tokenPath, "utf8");
 }
 
 function checkFeliz() {
@@ -132,5 +128,18 @@ function recursiveFeliz() {
     scheduleRecFeliz();
 }
 
-checkFeliz();
-scheduleRecFeliz();
+main();
+async function main(){
+    while(fs.existsSync(tokenPath) === false){
+        await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+    console.log("found token file");
+    userToken = fs.readFileSync(tokenPath, "utf8");
+    while(userToken === undefined || userToken.length === 0){
+        userToken = fs.readFileSync(tokenPath, "utf8");
+        await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+    console.log("found token value");
+    checkFeliz();
+    scheduleRecFeliz();
+}

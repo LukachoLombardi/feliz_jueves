@@ -17,7 +17,7 @@
         "blacklist": "",
         "custom_script": "",
         "download_dir": "",
-        "export_dir": "output",
+        "export_dir": "C:/Users/lulll/WebstormProjects/feliz_jueves/build/0.2.0",
         "force_download": false,
         "nw_compression_level": 0,
         "nw_version": "0.76.1",

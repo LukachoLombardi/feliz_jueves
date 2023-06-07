@@ -3,7 +3,7 @@ const fs = require("fs");
 console.log("starting checker");
 
 onOpenCallback();
-nw.Window.get(undefined).close();
+nw.Window.get(undefined).hide();
 
 // configuring the tray
 try {
@@ -16,7 +16,7 @@ try {
     }
     if (userToken === undefined || userToken === "") {
         console.error("token.txt is empty or missing");
-        trayTooltip = "token.txt is empty or missing. Add it and restart.";
+        trayTooltip = "userToken may be empty or missing. Add it and check if it works.";
     } else {
         trayTooltip = "Feliz Jueves is running🎉";
     }

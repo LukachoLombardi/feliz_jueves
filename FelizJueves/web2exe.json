@@ -3,8 +3,9 @@
         "blacklist": "",
         "custom_script": "",
         "download_dir": "",
-        "export_dir": "C:/Users/lulll/WebstormProjects/feliz_jueves/build/0.2.0",
+        "export_dir": "C:/Users/lulll/WebstormProjects/feliz_jueves/build/0.2.1",
         "force_download": false,
+        "linux-x64": true,
         "nw_compression_level": 0,
         "nw_version": "0.76.1",
         "output_pattern": "",
@@ -12,6 +13,6 @@
         "uncompressed_folder": true,
         "whitelist": "",
         "windows-x32": false,
-        "windows-x64": true
+        "windows-x64": false
     }
 }
