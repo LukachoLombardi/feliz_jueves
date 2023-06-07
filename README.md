@@ -1,6 +1,6 @@
 ![Feliz Jueves!](FelizJueves/icon.png)
 
-# Feliz Jueves
+# Feliz Jueves!
 
 Feliz Jueves a discord user-bot that allows you to set different discord status messages for each day of the week.
 
