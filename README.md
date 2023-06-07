@@ -3,7 +3,7 @@
 # Feliz Jueves!
 ### available on Windows and Linux 64bit respectively!
 
-Feliz Jueves a discord user-bot that allows you to set different discord status messages for each day of the week. 
+Feliz Jueves is a discord user-bot that allows you to set different discord status messages for each day of the week. 
 It includes a webUI for configuration and a background service for keeping your status up to date.
 
 On Windows just unpack the 7z-archive and start the FelizJueves executable. Use the tray icon to access settings. 
