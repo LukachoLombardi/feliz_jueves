@@ -23,6 +23,10 @@ status options with or without a special status emoji. These will be randomly se
 Use the autostart button to add the status setter to autostart. It will run in the background everytime you start your pc and ensure your status is set correctly.
 After first setting your token, the app will start working automatically. Note that the tray icon's token error won't disappear until the app restarts.
 
+## Updating
+Back up your settings.json and token.txt files in /package.nw/FelizCheck and put them back afterwards!
+When updating from v0.1.0, replace the whole folder. In later versions, replace the package.nw folder.
+
 ## How to build
 1. get the newest web2exe binary for your platform (deprecated but whatever).
 2. build the FelizJueves folder using the included settings For your desired platform.
