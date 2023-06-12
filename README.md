@@ -26,8 +26,8 @@ Use the autostart button to add the status setter to autostart. It will run in t
 After first setting your token, the app will start working automatically. Note that the tray icon's token error won't disappear until the app restarts.
 
 ## Updating
-Back up your settings.json and token.txt files in /package.nw/FelizCheck and put them back afterwards!
 When updating from v0.1.0, replace the whole folder. In later versions, replace the package.nw folder.
+Settings are persistent starting from v0.2.2.
 
 ## How to build
 1. get the newest web2exe binary for your platform (deprecated but whatever).
