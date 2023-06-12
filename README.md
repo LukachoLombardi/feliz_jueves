@@ -32,4 +32,3 @@ Settings are persistent starting from v0.2.2.
 ## How to build
 1. get the newest web2exe binary for your platform (deprecated but whatever).
 2. build the FelizJueves folder using the included settings For your desired platform.
-3. add an empty token.txt file besides the settings.json just for good measure.
