@@ -1,13 +1,13 @@
 const fs = require("fs");
-const {basename} = require("path");
+const path = require("path");
 const discord = require("discord-user-bots");
 
-const tokenError = "userToken may be empty or missing. Add it and check if it works.";
+const tokenError = "User Token may be empty or missing. Add it and check if it works.";
 const noErrors = "Feliz Jueves is running, no errors found!🎉";
 const runningTip = "Feliz Jueves is running🎉";
 
-let tokenPath = "token.txt";
-let settingsPath = "settings.json";
+let tokenPath = path.join(nw.App.dataPath, "token.txt");
+let settingsPath = path.join(nw.App.dataPath, "settings.json");
 
 nw.Window.open("./FelizJueves.html");
 nw.Window.get(undefined).hide();
@@ -43,7 +43,7 @@ try {
     }));
 
     menu.append(new nw.MenuItem({
-        label: "today's status:",
+        label: "Today's status:",
         enabled: false
     }));
 
@@ -119,8 +119,35 @@ function setStatus(userToken, status, statusEmoji, days, callback) {
     };
 }
 
-function checkFeliz() {
-    const settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
+async function checkFeliz() {
+    //quick token check
+    while(fs.existsSync(tokenPath) === false){
+        tray.menu.items[0].label = tokenError;
+        await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+    console.log("found token file");
+    userToken = fs.readFileSync(tokenPath, "utf8");
+    while(userToken === undefined || userToken.length === 0){
+        tray.menu.items[0].label = tokenError;
+        userToken = fs.readFileSync(tokenPath, "utf8");
+        await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+    tray.menu.items[0].label = noErrors;
+    console.log("found token value");
+
+
+    let settings;
+    let statusVariants;
+    //providing empty settings if missing
+    try{
+        settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
+    } catch (e){
+        settings = JSON.parse("");
+        console.log("reverting to empty settings")
+    }
+
+    statusVariants = settings.statusVariants;
+
 
     const dayNameMap = {
         0: "sunday",
@@ -136,8 +163,6 @@ function checkFeliz() {
     const nowDay = nowDate.getDay();
 
     console.log(`it's ${dayNameMap[nowDay]}`);
-
-    let statusVariants = settings.statusVariants;
 
     /*
     statusVariants.forEach((statusVariant) => {
@@ -165,7 +190,7 @@ function checkFeliz() {
 
             if (nowDay === day) {
                 //tray tip
-                tray.menu.items[1].label = "today's status: " + status + " " + statusEmoji;
+                tray.menu.items[1].label = "Today's status: " + status + " " + statusEmoji;
 
                 setStatus(userToken, status, statusEmoji, daysForward, () => {
                     //pass
@@ -210,18 +235,6 @@ function recursiveFeliz() {
 }
 
 async function runScheduledChecker(){
-    while(fs.existsSync(tokenPath) === false){
-        tray.menu.items[0].label = tokenError;
-        await new Promise(resolve => setTimeout(resolve, 5000));
-    }
-    console.log("found token file");
-    userToken = fs.readFileSync(tokenPath, "utf8");
-    while(userToken === undefined || userToken.length === 0){
-        userToken = fs.readFileSync(tokenPath, "utf8");
-        await new Promise(resolve => setTimeout(resolve, 5000));
-    }
-    tray.menu.items[0].label = noErrors;
-    console.log("found token value");
     checkFeliz();
     scheduleRecFeliz();
 }

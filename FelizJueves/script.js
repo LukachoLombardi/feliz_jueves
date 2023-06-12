@@ -2,26 +2,27 @@ win = nw.Window.get(undefined);
 win.resizeBy(20, 200)
 win.setResizable(false);
 
-fs = require('fs');
+const fs = require("fs");
+const path = require("path");
 
-const settingsPath = "settings.json";
-const tokenPath = "token.txt";
+const settingsPath = path.join(nw.App.dataPath, "settings.json");
+const tokenPath = path.join(nw.App.dataPath, "token.txt");
 
 // language=HTML
 let VariantSettings = `
     <div class="VariantSettings boxed rounded">
         <details>
-            <summary class="VariantSummary">new variant</summary>
+            <summary class="VariantSummary">New Variant</summary>
             <label><input class="Day narrower" type="number" min="0" max="6" onfocusout="ensureUniqueDay(event);">
-                day</label>
+                Day</label>
             <br>
-            <label><input class="DaysForward narrower" type="number" min="0" value="1"> daysForward</label>
+            <label><input class="DaysForward narrower" type="number" min="0" value="1"> Days Forward</label>
             <br>
             <ul class="StatusOptions">
                 <!--add in StatusOptions here-->
             </ul>
-            <button style="margin-left: 5px" onclick="addStatusOption(event);">+ status</button>
-            <button style="margin-left: 5px" onclick="removeLatestStatusOption(event);">- status</button>
+            <button style="margin-left: 5px" onclick="addStatusOption(event);">+ Status</button>
+            <button style="margin-left: 5px" onclick="removeLatestStatusOption(event);">- Status</button>
         </details>
     </div>
 `
@@ -30,10 +31,10 @@ let VariantSettings = `
 let StatusOption = `
     <li>
         <div class="StatusOption boxed rounded">
-            <label><input class="Status" type="text"> status</label>
+            <label><input class="Status" type="text"> Status</label>
             <br>
             <label><input class="StatusEmoji" type="text" onchange="ensureEmoji(event); createSummary(event);">
-                statusEmoji</label>
+                Status Emoji</label>
         </div>
     </li>
 `
@@ -43,11 +44,18 @@ loadSettings();
 function loadSettings() {
     console.log("loading settings");
 
+    let settings;
     if (fs.existsSync(settingsPath) === true) {
-        var settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
+        settings = JSON.parse(fs.readFileSync(settingsPath, "utf8"));
+
+        if(settings.statusVariants.length === 0){
+            settings = JSON.parse(fs.readFileSync("settings.json", "utf8"));
+        }
     } else {
-        fs.writeFileSync(settingsPath, "", "utf8");
+        settings = JSON.parse(fs.readFileSync("settings.json", "utf8"));
+        saveSettings();
     }
+
 
     if (fs.existsSync(tokenPath) === true) {
         window.document.getElementById("userToken").value = fs.readFileSync(tokenPath, "utf8");
