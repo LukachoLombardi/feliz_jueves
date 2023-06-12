@@ -4,8 +4,8 @@ win.setResizable(false);
 
 fs = require('fs');
 
-const settingsPath = "FelizCheck/settings.json";
-const tokenPath = "FelizCheck/token.txt";
+const settingsPath = "settings.json";
+const tokenPath = "token.txt";
 
 // language=HTML
 let VariantSettings = `
